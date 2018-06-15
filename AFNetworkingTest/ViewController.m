@@ -13,7 +13,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
+    
+    [manager GET:@"http://localhost" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
     // Do any additional setup after loading the view.
 }
 
