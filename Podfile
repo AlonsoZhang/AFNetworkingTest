@@ -1,6 +1,6 @@
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :osx, '10.13'
 
 target 'AFNetworkingTest' do
-pod 'AFNetworking', '~> 3.0'
+    use_frameworks!
+    pod 'AFNetworking', '~> 3.0'
 end

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D714BB2EF5C6D47A8D15F648 /* libPods-AFNetworkingTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665B400B4ABF0435A35EA713 /* libPods-AFNetworkingTest.a */; };
+		AAE940854BDA5E130AB51DB6 /* Pods_AFNetworkingTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D9040B9484A86421206219 /* Pods_AFNetworkingTest.framework */; };
 		E23CCEDC20D0BBEB0021AB37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E23CCEDB20D0BBEB0021AB37 /* AppDelegate.m */; };
 		E23CCEDF20D0BBEB0021AB37 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E23CCEDE20D0BBEB0021AB37 /* ViewController.m */; };
 		E23CCEE120D0BBED0021AB37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E23CCEE020D0BBED0021AB37 /* Assets.xcassets */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		665B400B4ABF0435A35EA713 /* libPods-AFNetworkingTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AFNetworkingTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		67D9040B9484A86421206219 /* Pods_AFNetworkingTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AFNetworkingTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F1F7ECFB251DCE010D370E6 /* Pods-AFNetworkingTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFNetworkingTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AFNetworkingTest/Pods-AFNetworkingTest.debug.xcconfig"; sourceTree = "<group>"; };
 		B09518FE25B542F94F0BBE7C /* Pods-AFNetworkingTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFNetworkingTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-AFNetworkingTest/Pods-AFNetworkingTest.release.xcconfig"; sourceTree = "<group>"; };
 		E23CCED720D0BBEB0021AB37 /* AFNetworkingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFNetworkingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D714BB2EF5C6D47A8D15F648 /* libPods-AFNetworkingTest.a in Frameworks */,
+				AAE940854BDA5E130AB51DB6 /* Pods_AFNetworkingTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +89,7 @@
 		E6851181C48F19C1AA84B977 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				665B400B4ABF0435A35EA713 /* libPods-AFNetworkingTest.a */,
+				67D9040B9484A86421206219 /* Pods_AFNetworkingTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -105,6 +105,7 @@
 				E23CCED320D0BBEB0021AB37 /* Sources */,
 				E23CCED420D0BBEB0021AB37 /* Frameworks */,
 				E23CCED520D0BBEB0021AB37 /* Resources */,
+				863B0B7EBFB1513ED0EFAA63 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -176,6 +177,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		863B0B7EBFB1513ED0EFAA63 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AFNetworkingTest/Pods-AFNetworkingTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AFNetworkingTest/Pods-AFNetworkingTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
