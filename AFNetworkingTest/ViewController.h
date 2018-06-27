@@ -7,10 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "AFHTTPSessionManager+SharedManager.h"
 
 @interface ViewController : NSViewController
-
 
 @end
 

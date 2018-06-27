@@ -16,10 +16,11 @@
 //    [self doGetRequest];
 //    [self doPostRequest];
 //    [self doUploadRequest];
-    [self doDownLoadRequest];
+//    [self doDownLoadRequest];
+    [self aFNetworkStatus];
 }
 
-- (AFHTTPSessionManager *)sharedManager
+/*- (AFHTTPSessionManager *)sharedManager
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //最大请求并发任务数
@@ -51,7 +52,7 @@
     //设置返回的Content-type
     manager.responseSerializer.acceptableContentTypes=[[NSSet alloc] initWithObjects:@"application/xml", @"text/xml",@"text/html", @"application/json",@"text/plain",@"text/json",nil];
     return manager;
-}
+}*/
 
 -(void)doGetRequest
 {
@@ -60,7 +61,7 @@
     //构造参数
     //NSDictionary *parameters=@{@"name":@"yanzhenjie",@"pwd":@"123"};
     //AFN管理者调用get请求方法
-    [[self sharedManager] GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+    [[AFHTTPSessionManager zwsharedManager] GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         //返回请求返回进度
         NSLog(@"downloadProgress-->%@",downloadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -89,7 +90,7 @@
 //    [dict setObject:@"ILfYpE4Dhs2gWcuQx" forKey:@"workspace_id"];
     // 参数1: url
     // 参数2: body体
-    [[self sharedManager] POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[AFHTTPSessionManager zwsharedManager] POST:urlString parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
         NSLog(@"上传的进度");
     } success:^(NSURLSessionDataTask * _Nonnull task, id _Nullable responseObject) {
         NSString * str  =[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -104,7 +105,7 @@
     // 创建URL资源地址
     NSString *url = @"http://10.42.222.70/AEOverlay/upload_file.php";
     // 参数
-    [[self sharedManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    [[AFHTTPSessionManager zwsharedManager] POST:url parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         NSData *data  =[NSData dataWithContentsOfFile:@"/Users/alonso/Desktop/949.zip"];
         [formData appendPartWithFileData:data name:@"file" fileName:@"949.zip" mimeType:@"multipart/form-data; boundary=YYWEB"];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -128,7 +129,7 @@
     // 创建请求对象
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     // 下载任务
-    NSURLSessionDownloadTask *task = [[self sharedManager] downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+    NSURLSessionDownloadTask *task = [[AFHTTPSessionManager zwsharedManager] downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         // 下载进度
         NSLog(@"当前下载进度为:%lf", 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
@@ -141,5 +142,57 @@
     }];
     //启动下载任务
     [task resume];
+}
+
+- (void)aFNetworkStatus{
+    //创建网络监测者
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    
+    /*枚举里面四个状态  分别对应 未知 无网络 数据 WiFi
+     typedef NS_ENUM(NSInteger, AFNetworkReachabilityStatus) {
+     AFNetworkReachabilityStatusUnknown          = -1,      未知
+     AFNetworkReachabilityStatusNotReachable     = 0,       无网络
+     AFNetworkReachabilityStatusReachableViaWWAN = 1,       蜂窝数据网络
+     AFNetworkReachabilityStatusReachableViaWiFi = 2,       WiFi
+     };
+     */
+    
+    [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        //这里是监测到网络改变的block  可以写成switch方便
+        //在里面可以随便写事件
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                NSLog(@"未知网络状态");
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"无网络");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                NSLog(@"蜂窝数据网");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                NSLog(@"WiFi网络");
+                break;
+            default:
+                break;
+        }
+    }];
+    [manager startMonitoring];
+}
+
+
++ (AFHTTPSessionManager *)sharedManager
+{
+    static AFHTTPSessionManager *manager = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.operationQueue.maxConcurrentOperationCount = 5;
+        manager.requestSerializer.timeoutInterval=30.f;
+        manager.responseSerializer.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/xml", @"text/xml",@"text/html", @"application/json",@"text/plain",nil];
+        [manager.requestSerializer setValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
+        
+    });
+    return manager;
 }
 @end
